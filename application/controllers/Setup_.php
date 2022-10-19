@@ -108,6 +108,14 @@ class Setup_ extends CI_Controller {
     	$this->load->view("setup/transactionTable", $data);
     }
 
+    public function loadActivityTable(){
+    	$data = $this->input->post();
+    	$id = "";
+    	// if ($this->session->userdata("type") == "admin") $id = $this->session->userdata("id");
+    	$data['record'] = $this->setup->getTransactionSetup("","","", "",'FIELD(`status`,"APPROVED")', "");
+    	$this->load->view("setup/activityTable", $data);
+    }
+
     public function manageTransaction(){
     	$data = $this->input->post();
 		if(isset($data['type'])) $type = $data['type'];

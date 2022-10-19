@@ -66,6 +66,12 @@
                             Transactions&nbsp;&nbsp;&nbsp;<span class="badge bg-secondary"><?= $this->setup->countPendingContribution() ?></span>
                         </a>
                         <?php if ($this->session->userdata("type") == "admin"): ?>
+                        <a class="nav-link menuLink" type="button" tag="admin" siteName="setup/activity">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Activity Logs&nbsp;&nbsp;&nbsp;<span class="badge bg-secondary"></span>
+                        </a>
+                        <?php endif ?>
+                        <?php if ($this->session->userdata("type") == "admin"): ?>
                         <div class="sb-sidenav-menu-heading">Reports</div>
                             <a class="nav-link reportType" role="button" rap="contribution" href="#">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
