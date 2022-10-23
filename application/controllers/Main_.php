@@ -26,7 +26,7 @@ class Main_ extends CI_Controller {
 	public function index()
 	{
 		if(!$this->islogged()){    
-            $this->showSetupPage('main/landing', array(),"COMSLEM", false);
+            $this->showSetupPage('main/landing', array(),"COSLEM", false);
         }else{
             $data['user_funds'] = $this->setup->getUserFunds("",$this->session->userdata("id"));
             $data['memberCount'] = $this->setup->countUser("member");
@@ -69,7 +69,7 @@ class Main_ extends CI_Controller {
     	$this->showSetupPage("main/singUp","", "Sign-Up", false);
     }
 
-	public function showSetupPage($view, $data, $title = "COMSLEM", $nav = true){
+	public function showSetupPage($view, $data, $title = "COSLEM", $nav = true){
 		$this->load->view('includes/header', array('title' => $title));
 		if($nav) $this->load->view('includes/nav-header');
 		$this->load->view('includes/modal');

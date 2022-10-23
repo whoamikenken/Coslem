@@ -22,7 +22,7 @@ class Emailcon extends CI_Model {
         // Set your email information
         $from = array(
             'email' => 'brgy163@gmail.com',
-            'name' => 'COMSLEM'
+            'name' => 'COSLEM'
         );
 
         $emp_email = strtolower($emp_email);
@@ -66,7 +66,7 @@ class Emailcon extends CI_Model {
         // Set your email information
         $from = array(
             'email' => 'brgy163@gmail.com',
-            'name' => 'COMSLEM'
+            'name' => 'COSLEM'
         );
 
         $emp_email = strtolower($emp_email);

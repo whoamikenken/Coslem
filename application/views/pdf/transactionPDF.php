@@ -46,7 +46,7 @@ $info .= "
         <table width='60%'  >
             <tr>
                 <td rowspan='3' style='text-align: right;' width='60%'><img src='images/logo.png' style='width: 60px;text-align: center;' /></td>
-                <td valign='middle' width='90%' style='padding: 0;text-align: center;' width='45%'><span style='font-size: 13px;'><b>COMSLEM</b></span></td>
+                <td valign='middle' width='90%' style='padding: 0;text-align: center;' width='45%'><span style='font-size: 13px;'><b>COSLEM</b></span></td>
             </tr>
             <tr>
                 <td valign='middle' style='padding: 0;text-align: center;'><span style='font-size: 13px;' width='45%'><strong>Community-managed Savings and Credit Association</strong></span></td>

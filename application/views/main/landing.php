@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>COMSLEM</title>        <!-- Bootstrap icons-->
+        <title>COSLEM</title>        <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
@@ -16,7 +16,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
-                <a class="navbar-brand" href="#!"><img src="<?= base_url(); ?>images/logo.png" alt="" width="30" height="24">  COMSLEM</a>
+                <a class="navbar-brand" href="#!"><img src="<?= base_url(); ?>images/logo.png" alt="" width="30" height="24">  COSLEM</a>
                 <div class="d-flex">
                   <a class="btn btn-primary" href="<?= base_url(); ?>index.php/Main_/signUpPage" id="signUp">Sign Up</a>&nbsp;&nbsp;&nbsp;
                   <a class="btn btn-primary" href="<?= base_url(); ?>index.php/Main_/loginPage" id="login">Login</a>
@@ -107,7 +107,7 @@
                             <li class="list-inline-item">⋅</li>
                             <li class="list-inline-item"><a href="#!">Privacy Policy</a></li>
                         </ul>
-                        <p class="text-muted small mb-4 mb-lg-0">&copy; COMSLEM 2021. All Rights Reserved.</p>
+                        <p class="text-muted small mb-4 mb-lg-0">&copy; COSLEM 2021. All Rights Reserved.</p>
                     </div>
                     <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
                         <ul class="list-inline mb-0">

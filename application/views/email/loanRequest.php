@@ -583,7 +583,7 @@
             <table class="mcnCaptionLeftTextContentContainer" align="left" border="0" cellpadding="0" cellspacing="0" width="264">
                 <tbody><tr>
                     <td valign="top" class="mcnTextContent" style="color: #000000;font-style: normal;font-weight: bold;text-align: center;">
-                        <div style="text-align: center;"><strong>COMSLEM Organization</strong><br>
+                        <div style="text-align: center;"><strong>COSLEM Organization</strong><br>
 <strong>Barangay San Isidro Rosario Batangas<br>
 Batangas Branch </strong><br>
 &nbsp;</div>
