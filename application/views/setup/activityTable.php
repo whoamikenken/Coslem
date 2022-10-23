@@ -37,8 +37,8 @@
                     <a id="<?= $row['id'] ?>" class="btn btn-primary viewbtn" link="<?= $this->setup->getFileLink($row['file_id']) ?>"><i class="bi bi-files"></i> View</a>&nbsp;&nbsp;
                 <?php } ?>
             </td>
-            <td><img src='<?= $this->setup->getUserImage($row['user_id']) ?>' style='width: 60px;text-align: center;' /></td>
-            <td><?=$this->setup->getUserName($row['user_id'])?></td>
+            <td align="center"><img class="rounded " src='<?= $this->setup->getUserImage($row['user_id']) ?>' style='width: 80px;text-align: center;' /></td>
+            <td ><?=$this->setup->getUserName($row['user_id'])?></td>
             <td><?=$row['amount']?></td>
             <td><?= $remark ?></td>
             <td><?=$row['type']?></td>
@@ -56,6 +56,7 @@
     
 $(document).ready(function(){
     var table = $('#activityTable').DataTable();
+    $('.materialboxed').materialbox();
 });
 
 $("#activityTable").on("click", ".viewbtn", function(){
