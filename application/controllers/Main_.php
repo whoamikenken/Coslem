@@ -129,15 +129,15 @@ class Main_ extends CI_Controller {
                 $dataTransaction['amount'] = $value['monthly'];
                 $dataTransaction['created_by'] = "1";
                 $dataTransaction['approve_by'] = "1";
-                $dataTransaction['status'] = "APPROVED";
+                $dataTransaction['status'] = "PENDING";
                 $dataTransaction['remarks'] = "Monthly Loan Payment";
                 $this->setup->insertData("transactions", $dataTransaction);
                 $insert_id = $this->db->insert_id();
 
                 $this->smsSenderMain($value['mobile'] ,"Hello, ".$value["name"].". Please pay your ₱".$value['monthly'].".00 loan in one of our treasurer.");
 
-                $message = $this->loanRequestEmailMain($value['name'], $value['address'], $insert_id, "Loan Payment", "Please pay your loan amounting ".$value['amount'].".00 to any of our treasurer.");
-                $this->Emailcon->sendEmail($message, $value['email'], "Loan Request Payment");
+                // $message = $this->loanRequestEmailMain($value['name'], $value['address'], $insert_id, "Loan Payment", "Please pay your loan amounting ".$value['amount'].".00 to any of our treasurer.");
+                // $this->Emailcon->sendEmail($message, $value['email'], "Loan Request Payment");
             }
         }
     }
@@ -162,8 +162,8 @@ class Main_ extends CI_Controller {
 
                 $this->smsSenderMain($value['mobile'] ,"Hello, ".$value["name"].". Please pay your ₱".$value['contribution']." contribution in one of our treasurer.");
 
-                $message = $this->loanRequestEmailMain($value['name'], $value['address'], $insert_id, "Contribution Payment", "Please pay your contribution amounting ".$value['contribution']." to any of our treasurer. Reference Number: ".$insert_id);
-                $this->Emailcon->sendEmail($message, $value['email'], "Contribution Request Payment");
+                // $message = $this->loanRequestEmailMain($value['name'], $value['address'], $insert_id, "Contribution Payment", "Please pay your contribution amounting ".$value['contribution']." to any of our treasurer. Reference Number: ".$insert_id);
+                // $this->Emailcon->sendEmail($message, $value['email'], "Contribution Request Payment");
             }   
         }
     }

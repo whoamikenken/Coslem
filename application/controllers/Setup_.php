@@ -430,16 +430,18 @@ class Setup_ extends CI_Controller {
 				$this->setup->insertData("transactions", $dataTransaction);
 				$insert_id = $this->db->insert_id();
 
+				$this->smsSender($userMobile,"Your loan request has been approved please go to out nearest treasurer to claim your funds amounting ".$data['amount']);
+
+
 	            // $message = $this->loanRequestEmail($userName, $userAddress, $insert_id, "Loan Request Approved", "Your loan request has been approved please go to out nearest treasurer to claim your funds amounting ".$data['amount'].". Reference Number: ".$insert_id);
 	        	// $this->Emailcon->sendEmail($message, $userEmail, "Loan Request Approved");
 
-	        	$this->smsSender($userMobile,"Your loan request has been approved please go to out nearest treasurer to claim your funds amounting ".$data['amount'].". Reference Number: ".$insert_id);
-
+	        	
 	        	//Send SMS notif to all treasurer
-		        $userAdmin = $this->setup->getUserList("","treasurer");
-		        foreach ($userAdmin as $key => $value) {
-		        	$this->smsSender($value['mobile'],"There's a loan request approved to ".$userName." amounting to ".$data['amount'].".");
-		        }
+		        // $userAdmin = $this->setup->getUserList("","treasurer");
+		        // foreach ($userAdmin as $key => $value) {
+		        // 	$this->smsSender($value['mobile'],"There's a loan request approved to ".$userName." amounting to ".$data['amount'].".");
+		        // }
 
     		}elseif(!$checkIfNeedNotif && $data['status'] == "DISAPPROVED"){
 

@@ -8,7 +8,7 @@ if($type == "viewing") $readonly = "readonly";
         <label for="user_id" class="form-label">User</label>
         <select class="form-select validate" aria-label="user_id" name="user_id" <?= $readonly ?>>
             <?php foreach ($user_list as $key => $value): ?>  
-                <option value="<?= $value['id'] ?>" <?= (isset($value['id']) && $value['id'] == $user_id)? "selected":"" ?>><?= $value['name'] ?></option>
+                <option value="<?= $value['id'] ?>" <?= (isset($record['user_id']) && $value['id'] == $record['user_id'])? "selected":"" ?>><?= $value['name'] ?></option>
             <?php endforeach ?>
       </select>
     </div>
