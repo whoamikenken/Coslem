@@ -1,4 +1,3 @@
-
 <style type="text/css">
     .card.mb-4 {
         height: 400px;
@@ -8,7 +7,7 @@
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">Dashboard</li>
 </ol>
-<?php if ($this->session->userdata("type") == "admin"): ?>
+<?php if ($this->session->userdata("type") == "admin") : ?>
     <div class="row">
         <div class="col-xl-3 col-md-6">
             <div class="card bg-primary text-white sm-4">
@@ -41,7 +40,7 @@
             <div class="card bg-danger text-white sm-4">
                 <div class="card-body"><span>Transactions</span><br><span><?= $transactionCount ?></span></div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <a class="small text-white stretched-link menuLink" href="#" tag="admin" sitename="setup/transact">View Details</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -50,36 +49,36 @@
     <br><br>
 <?php endif ?>
 <div class="row">
-    <?php if ($this->session->userdata("type") == "admin"){ ?>
+    <?php if ($this->session->userdata("type") == "admin") { ?>
         <div class="col-xl-6">
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-chart-area me-1"></i>
-                    Funds 
+                    Funds
                 </div>
                 <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
             </div>
         </div>
-    <?php }elseif($this->session->userdata("type") == "member"){ ?>
+    <?php } elseif ($this->session->userdata("type") == "member") { ?>
         <div class="col-xl-6">
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-chart-area me-1"></i>
-                    Funds 
+                    Funds
                 </div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Available Funds: <?= $user_funds[0]['available'].".00" ?></li>
-                        <li class="list-group-item">Total Contributions: <?= $user_funds[0]['contribution'].".00" ?></li>
-                        <li class="list-group-item">Pending Balance: <?= $user_funds[0]['balance'].".00" ?></li>
-                        <?php if ($loanAmountMontly): ?>
+                        <li class="list-group-item">Available Funds: <?= $user_funds[0]['available'] . ".00" ?></li>
+                        <li class="list-group-item">Total Contributions: <?= $user_funds[0]['contribution'] . ".00" ?></li>
+                        <li class="list-group-item">Pending Balance: <?= $user_funds[0]['balance'] . ".00" ?></li>
+                        <?php if ($loanAmountMontly) : ?>
                             <li class="list-group-item">
-                                Monthly: <?= $loanAmountMontly.".00" ?>
+                                Monthly: <?= $loanAmountMontly . ".00" ?>
                             </li>
                         <?php endif ?>
-                        <?php if ($loanAmountMontly): ?>
+                        <?php if ($loanAmountMontly) : ?>
                             <li class="list-group-item">
-                                Remain Loan Balance: <?= $remainingBalance.".00" ?>
+                                Remain Loan Balance: <?= $remainingBalance . ".00" ?>
                             </li>
                         <?php endif ?>
                     </ul>
@@ -89,8 +88,8 @@
                 </div>
             </div>
         </div>
-    <?php }else{ ?>
-        
+    <?php } else { ?>
+
     <?php } ?>
     <div class="col-xl-6">
         <div class="card mb-4">
@@ -108,79 +107,79 @@
         Recent Transaction
     </div>
     <div class="card-body" id="recent">
-        
+
     </div>
 </div>
-                   
+
 <script src="<?= base_url() ?>js/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function() {
         $('#datatablesSimple').DataTable();
         getUserContributionChart();
         getUserTransactions();
         getFundsData();
     });
 
-    function getUserTransactions(){
+    function getUserTransactions() {
         $.ajax({
             type: "POST",
-            url: "<?= site_url('Setup_/loadRecentTransaction')?>",
+            url: "<?= site_url('Setup_/loadRecentTransaction') ?>",
             data: {},
-            success:function(response){
+            success: function(response) {
                 $("#recent").html(response);
             }
         });
     }
 
 
-    function getFundsData(){
+    function getFundsData() {
         $.ajax({
             type: "POST",
-            url: "<?= site_url('Setup_/getTotalFunds')?>",
+            url: "<?= site_url('Setup_/getTotalFunds') ?>",
             data: $('#userManageForm').serialize(),
             dataType: "json",
-            success:function(response){
-              // Set new default font family and font color to mimic Bootstrap's default styling
+            success: function(response) {
+                // Set new default font family and font color to mimic Bootstrap's default styling
                 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
                 Chart.defaults.global.defaultFontColor = '#292b2c';
 
                 // Bar Chart Example
                 var ctx = document.getElementById("myAreaChart");
                 var myLineChart = new Chart(ctx, {
-                  type: 'pie',
-                  data: {
-                    labels: ['Total Funds', 'Current Funds', 'Loan', 'Unpaid Funds'],
-                    datasets: [{
-                      label: 'Funds',
-                      backgroundColor: ['#4dc9f6','#537bc4','#f53794','#f67019','#D53343'],
-                      data: JSON.parse(response.data),
-                    }],
-                  },
-                  options: {
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        position: 'top',
-                      },
-                      title: {
-                        display: true,
-                        text: 'Funds Total'
-                      }
+                    type: 'pie',
+                    data: {
+                        labels: ['Current Funds', 'Loan', 'Unpaid Funds'],
+                        datasets: [{
+                            label: 'Funds',
+                            backgroundColor: ['#537bc4', '#f53794', '#f67019', '#D53343'],
+                            data: JSON.parse(response.data),
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Funds Total'
+                            }
+                        }
                     }
-                  }
                 });
             }
         });
     }
 
-    function getUserContributionChart(){
+    function getUserContributionChart() {
         $.ajax({
             type: "POST",
-            url: "<?= site_url('Setup_/getUserTransactionPerMonth')?>",
+            url: "<?= site_url('Setup_/getUserTransactionPerMonth') ?>",
             data: $('#userManageForm').serialize(),
             dataType: "json",
-            success:function(response){
+            success: function(response) {
                 // Set new default font family and font color to mimic Bootstrap's default styling
                 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
                 Chart.defaults.global.defaultFontColor = '#292b2c';
@@ -188,41 +187,41 @@
                 // Bar Chart Example
                 var ctx = document.getElementById("myBarChart");
                 var myLineChart = new Chart(ctx, {
-                  type: 'bar',
-                  data: {
-                    labels: JSON.parse(response.month),
-                    datasets: [{
-                      label: "Contribution",
-                      backgroundColor: "rgba(2,117,216,1)",
-                      borderColor: "rgba(2,117,216,1)",
-                      data: JSON.parse(response.data),
-                    }],
-                  },
-                  options: {
-                    scales: {
-                      xAxes: [{
-                        time: {
-                          unit: 'month'
-                        },
-                        gridLines: {
-                          display: false
-                        }
-                      }],
-                      yAxes: [{
-                        ticks: {
-                          min: 0,
-                          max: 15000,
-                          maxTicksLimit: 5
-                        },
-                        gridLines: {
-                          display: true
-                        }
-                      }],
+                    type: 'bar',
+                    data: {
+                        labels: JSON.parse(response.month),
+                        datasets: [{
+                            label: "Contribution",
+                            backgroundColor: "rgba(2,117,216,1)",
+                            borderColor: "rgba(2,117,216,1)",
+                            data: JSON.parse(response.data),
+                        }],
                     },
-                    legend: {
-                      display: false
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                time: {
+                                    unit: 'month'
+                                },
+                                gridLines: {
+                                    display: false
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    max: 15000,
+                                    maxTicksLimit: 5
+                                },
+                                gridLines: {
+                                    display: true
+                                }
+                            }],
+                        },
+                        legend: {
+                            display: false
+                        }
                     }
-                  }
                 });
 
             }

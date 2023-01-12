@@ -346,6 +346,42 @@ class setup extends CI_Model {
         }
         return $randomString;
     }
+
+    public function getTransactionSingleData($id, $column)
+    {
+        $this->db->select($column);
+        if ($id) $this->db->where('id', $id);
+        $res = $this->db->get('transactions')->result_array();
+        if (count($res) > 0) {
+            return $res[0][$column];
+        } else {
+            return "false";
+        }
+    }
+
+    public function getUserFundsSingleData($id, $column)
+    {
+        $this->db->select($column);
+        if ($id) $this->db->where('user_id', $id);
+        $res = $this->db->get('funds')->result_array();
+        if (count($res) > 0) {
+            return $res[0][$column];
+        } else {
+            return "false";
+        }
+    }
+
+    public function getUserLoanSingleData($id, $column)
+    {
+        $this->db->select($column);
+        if ($id) $this->db->where('id', $id);
+        $res = $this->db->get('loan')->result_array();
+        if (count($res) > 0) {
+            return $res[0][$column];
+        } else {
+            return "false";
+        }
+    }
 }
 
 

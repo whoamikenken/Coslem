@@ -57,14 +57,52 @@ class Setup_ extends CI_Controller {
     	$this->load->view("setup/loanTable", $data);
     }
 
-    public function updateTransactionStatus(){
-    	$data = $this->input->post();
-    	$updateData = array();
-    	$updateData['status'] = "APPROVED";
+	public function updateTransactionStatus()
+	{
+		$data = $this->input->post();
+		$updateData = array();
+		if (!isset($data['status'])) $updateData['status'] = "APPROVED";
 
-    	$this->setup->updateData("transactions", $updateData, $data['code']);
-        echo "success";
-    }
+		$TrasactionType = $this->setup->getTransactionSingleData($data['code'], "type");
+		if ($TrasactionType == "Contribution") {
+			$TransactionAmount = $this->setup->getTransactionSingleData($data['code'], "amount");
+			$TransactionUser = $this->setup->getTransactionSingleData($data['code'], "user_id");
+			$getUserFundsAvailable = $this->setup->getUserFundsSingleData($TransactionUser, "available");
+			$getUserFundsContribution = $this->setup->getUserFundsSingleData($TransactionUser, "contribution");
+			$getUserFundID = $this->setup->getUserFundsSingleData($TransactionUser, "id");
+			// UPDATE USER FUNDS
+			$userFundsData = array();
+			$userFundsData['available'] = $getUserFundsAvailable + ($TransactionAmount * 3);
+			$userFundsData['contribution'] = $getUserFundsContribution + $TransactionAmount;
+			$this->setup->updateData("funds", $userFundsData, $getUserFundID);
+		} elseif ($TrasactionType == "Loan Payment" || $TrasactionType == "Loan Fines") {
+
+			$TransactionAmount = $this->setup->getTransactionSingleData($data['code'], "amount");
+			$TransactionUser = $this->setup->getTransactionSingleData($data['code'], "user_id");
+			$getUserFundsBalance = $this->setup->getUserFundsSingleData($TransactionUser, "balance");
+			$getUserFundID = $this->setup->getUserFundsSingleData($TransactionUser, "id");
+
+			// UPDATE USER FUNDS
+			$userFundsData = array();
+			$userFundsData['balance'] = $getUserFundsBalance - $TransactionAmount;
+
+			$this->setup->updateData("funds", $userFundsData, $getUserFundID);
+
+			if ($TrasactionType == "Loan Payment") {
+				$getUserLoanID = $this->setup->getTransactionSingleData($data['code'], "base_id");
+				$getUserRemmainingLoan = $this->setup->getUserLoanSingleData($getUserLoanID, "remaining_balance");
+
+				// UPDATE REMAINING BALANCE MONTH
+				$userLoanRemainingData = array();
+				$userLoanRemainingData['remaining_balance'] = $getUserRemmainingLoan - $TransactionAmount;
+
+				$this->setup->updateData("loan", $userLoanRemainingData, $getUserLoanID);
+			}
+		}
+
+		$this->setup->updateData("transactions", $updateData, $data['code']);
+		echo "success";
+	}
 
     public function addTransactionFile(){
     	$data = $this->input->post();
@@ -240,10 +278,10 @@ class Setup_ extends CI_Controller {
 				$dataTransaction['status'] = "APPROVED";
 				$dataTransaction['remarks'] = "Member Contribution";
 
-				$this->load->model('Emailcon');
+				// $this->load->model('Emailcon');
 				
-				$message = $this->accountConfirmationEmail($data['name']);
-				$this->Emailcon->sendConfirmationEmail($message, $data['email']);
+				// $message = $this->accountConfirmationEmail($data['name']);
+				// $this->Emailcon->sendConfirmationEmail($message, $data['email']);
 				$this->smsSender($data['mobile'],"Your account has been confirm and created you may try login your account in our system. ".base_url());
 				$this->smsSender($data['mobile'],"We have receive your contribution amounting ".$data['contribution'].". You have an available amount of ".$dataFunds['available']);
 				$this->setup->insertData("funds", $dataFunds);
@@ -260,8 +298,8 @@ class Setup_ extends CI_Controller {
 	
 	            $this->load->model('Emailcon');
 	            
-	            $message = $this->accountConfirmationEmail($data['name']);
-	            $this->Emailcon->sendConfirmationEmail($message, $data['email']);
+	            // $message = $this->accountConfirmationEmail($data['name']);
+	            // $this->Emailcon->sendConfirmationEmail($message, $data['email']);
 	            $this->smsSender($data['mobile'],"Your account has been confirm you may try login your account in our system");
 	            
 				if($data['type'] == "member"){
@@ -341,8 +379,8 @@ class Setup_ extends CI_Controller {
     		$insert_id = $this->db->insert_id();
     		// $insert_id = "143";
     		//Send email confirmation
-    		$message = $this->loanRequestEmail($userName, $userAddress, $insert_id, "Loan Request Pending", "We have receive your loan request please wait for the approval of the admin.");
-	        $this->Emailcon->sendEmail($message, $userEmail, "Loan Request");
+    		// $message = $this->loanRequestEmail($userName, $userAddress, $insert_id, "Loan Request Pending", "We have receive your loan request please wait for the approval of the admin.");
+	        // $this->Emailcon->sendEmail($message, $userEmail, "Loan Request");
 	       
 	        //Send SMS notif to all admin
 	        $userAdmin = $this->setup->getUserList("","admin");
@@ -356,7 +394,7 @@ class Setup_ extends CI_Controller {
 	        	$this->smsSender($value['mobile'],"There's a new loan request receive from ".$userName." amounting to ".$data['amount'].".");
 	        }
 
-	        $this->smsSender($userMobile,"We have receive your request on loaning an amount of ".$data['amount'].". We please wait for the confirmation of the admin to approve your request. Reference Number: ".$insert_id);
+	        $this->smsSender($userMobile,"We have receive your request on loaning an amount of ".$data['amount'].". Please wait for the confirmation of the admin to approve your request. Reference Number: ".$insert_id);
     	}else{
     		$id = $data['code'];
     		unset($data['code']);
@@ -392,8 +430,8 @@ class Setup_ extends CI_Controller {
 				$this->setup->insertData("transactions", $dataTransaction);
 				$insert_id = $this->db->insert_id();
 
-	            $message = $this->loanRequestEmail($userName, $userAddress, $insert_id, "Loan Request Approved", "Your loan request has been approved please go to out nearest treasurer to claim your funds amounting ".$data['amount'].". Reference Number: ".$insert_id);
-	        	$this->Emailcon->sendEmail($message, $userEmail, "Loan Request Approved");
+	            // $message = $this->loanRequestEmail($userName, $userAddress, $insert_id, "Loan Request Approved", "Your loan request has been approved please go to out nearest treasurer to claim your funds amounting ".$data['amount'].". Reference Number: ".$insert_id);
+	        	// $this->Emailcon->sendEmail($message, $userEmail, "Loan Request Approved");
 
 	        	$this->smsSender($userMobile,"Your loan request has been approved please go to out nearest treasurer to claim your funds amounting ".$data['amount'].". Reference Number: ".$insert_id);
 
@@ -405,8 +443,8 @@ class Setup_ extends CI_Controller {
 
     		}elseif(!$checkIfNeedNotif && $data['status'] == "DISAPPROVED"){
 
-    			$message = $this->loanRequestEmail($userName, $userAddress, $insert_id, "Loan Request Disapproved", "Your loan request has been disapproved by our admin.");
-	        	$this->Emailcon->sendEmail($message, $userEmail, "Loan Request Approved");
+    			// $message = $this->loanRequestEmail($userName, $userAddress, $insert_id, "Loan Request Disapproved", "Your loan request has been disapproved by our admin.");
+	        	// $this->Emailcon->sendEmail($message, $userEmail, "Loan Request Approved");
 
 	        	$this->smsSender($userMobile,"Your loan request has been disapproved by our admin.");
     		}
@@ -493,7 +531,7 @@ class Setup_ extends CI_Controller {
 		$totalLoan = $this->setup->getDataMonthly("","","","Loan");
 		$totalLoan = ($totalLoan[0]['total'])? $totalLoan[0]['total']:0;
 		$unpaidFunds = ($currentFunds - $totalFunds);
-		$return['data'] = "[".$totalFunds.",".$currentFunds.",".$totalLoan.",".$unpaidFunds."]";
+		$return['data'] = "[".$currentFunds.",".$totalLoan.",".$unpaidFunds."]";
 		// echo"<pre>";print_r($shareAmount);die;
 		// echo"<pre>";print_r(json_encode($return));die;
     	echo json_encode($return);

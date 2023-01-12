@@ -73,10 +73,10 @@
                         <?php endif ?>
                         <?php if ($this->session->userdata("type") == "admin"): ?>
                         <div class="sb-sidenav-menu-heading">Reports</div>
-                            <a class="nav-link reportType" role="button" rap="contribution" href="#">
+                            <!-- <a class="nav-link reportType" role="button" rap="contribution" href="#">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 All Contribution
-                            </a>
+                            </a> -->
                             
                             <a class="nav-link menuLink" type="button" tag="admin" siteName="setup/loan">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>

@@ -109,7 +109,7 @@ class Main_ extends CI_Controller {
 		$data['status'] = 'Unverified';
 		$data['password'] = md5($data['password']);
     	$this->setup->insertData("users", $data);
-    	$this->Setup_->smsSender($data['mobile'],"Hello, ".$data["name"].". Please pay your ".$data['contribution']." contribution in one of our treasurer to confirm your application");
+    	$this->smsSenderMain($data['mobile'],"Hello, ".$data["name"].". Please pay your ".$data['contribution']." contribution in one of our treasurer to confirm your application");
     	echo "success";
     }
 
