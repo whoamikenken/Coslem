@@ -73,14 +73,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-$url = parse_url("mysql://ba6f22198e56c6:4aa30095@us-cdbr-east-06.cleardb.net/heroku_051c16b867ddb9a?reconnect=true");
-
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => $url["host"],
-	'username' => $url["user"],
-	'password' => $url["pass"],
-	'database' => substr($url["path"], 1),
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	'database' => 'coslem',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
