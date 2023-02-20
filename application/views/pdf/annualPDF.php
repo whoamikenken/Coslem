@@ -1,7 +1,7 @@
 <?php
 $record = $this->setup->getAnnualSetup($code)[0];
 $getMemberList = $this->setup->getUserList("", "member");
-// echo"<pre>";print_r($record);die;
+// echo"<pre>";print_r($getMemberList);die;
 
 $share = $record['share'];
 
@@ -56,7 +56,7 @@ $info .= "
                 <td valign='middle' width='90%' style='padding: 0;text-align: center;' width='45%'><span style='font-size: 13px;'><b>COSLEM</b></span></td>
             </tr>
             <tr>
-                <td valign='middle' style='padding: 0;text-align: center;'><span style='font-size: 13px;' width='45%'><strong>Community-managed Savings and Credit Association</strong></span></td>
+                <td valign='middle' style='padding: 0;text-align: center;'><span style='font-size: 13px;' width='45%'><strong>Community-Base Savings and Lending Management System</strong></span></td>
             </tr>
             <tr>
                 <td valign='middle' style='padding: 0;text-align: center;'><span style='font-size: 13px;' width='45%'><strong>Annual Report</strong></span></td>
@@ -65,6 +65,7 @@ $info .= "
     </div>
 </htmlpageheader>";
 $dataTotalArray = array();
+$dataTotalArray["annual"]['loan_amount_remaining'] = 0;
 
 $info .= "
 
@@ -139,6 +140,14 @@ $info .= "
                     $getMemberList[$row]['share'] = $totalShare;
                     $totalShareAnnual += $totalShare;
                 }
+            }
+
+            if (doubleval($totalLoanInterest) == 0.0) {
+                $totalLoanInterest = 1;
+            }
+
+            if (doubleval($totalShareAnnual) == 0.0) {
+                $totalShareAnnual = 1;
             }
 
             $interestPerShare = $totalLoanInterest / $totalShareAnnual;
@@ -265,7 +274,12 @@ $info .= "
 		</div>
 	</htmlpagefooter>
 ";
+
+
 $pdf->WriteHTML($info);
+// echo "<pre>";
+// print_r($info);
+// die;
 
 $pdf->Output('Annual List Report .pdf', 'I');
 ?>
