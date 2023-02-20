@@ -49,7 +49,7 @@ $info .= "
                 <td valign='middle' width='90%' style='padding: 0;text-align: center;' width='45%'><span style='font-size: 13px;'><b>COSLEM</b></span></td>
             </tr>
             <tr>
-                <td valign='middle' style='padding: 0;text-align: center;'><span style='font-size: 13px;' width='45%'><strong>Community-Base Savings and Lending Management System</strong></span></td>
+                <td valign='middle' style='padding: 0;text-align: center;'><span style='font-size: 13px;' width='45%'><strong>Community-managed Savings and Credit Association</strong></span></td>
             </tr>
             <tr>
                 <td valign='middle' style='padding: 0;text-align: center;'><span style='font-size: 13px;' width='45%'><strong>Transaction Report</strong></span></td>
