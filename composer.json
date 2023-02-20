@@ -11,7 +11,7 @@
 		"source": "https://github.com/bcit-ci/CodeIgniter"
 	},
 	"require": {
-		"php": "7.3.33",
+		"php": "7.2.34",
 		"mpdf/mpdf": "7.0"
 	},
 	"suggest": {
