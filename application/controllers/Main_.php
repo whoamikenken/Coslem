@@ -142,6 +142,35 @@ class Main_ extends CI_Controller {
         }
     }
 
+    public function createMonthlyTransactionTest()
+    {
+        $this->load->model('Emailcon');
+        // if (date("d") == 01) {
+        $record = $this->setup->getUserLoanDataForMonthlyBilling();
+        // echo "<pre>";print_r($this->db->last_query());die;
+        // echo"<pre>";print_r($record);die;
+        foreach ($record as $key => $value) {
+            // Create Transaction monthly for loan
+            $dataTransaction = array();
+            $dataTransaction['user_id'] = $value['user_id'];
+            $dataTransaction['base_id'] = $value['id'];
+            $dataTransaction['type'] = "Loan Payment";
+            $dataTransaction['amount'] = $value['monthly'];
+            $dataTransaction['created_by'] = "1";
+            $dataTransaction['approve_by'] = "1";
+            $dataTransaction['status'] = "PENDING";
+            $dataTransaction['remarks'] = "Monthly Loan Payment";
+            $this->setup->insertData("transactions", $dataTransaction);
+            $insert_id = $this->db->insert_id();
+
+            $this->smsSenderMain($value['mobile'], "Hello, " . $value["name"] . ". Please pay your ₱" . $value['monthly'] . ".00 loan in one of our treasurer.");
+
+            // $message = $this->loanRequestEmailMain($value['name'], $value['address'], $insert_id, "Loan Payment", "Please pay your loan amounting ".$value['amount'].".00 to any of our treasurer.");
+            // $this->Emailcon->sendEmail($message, $value['email'], "Loan Request Payment");
+        }
+        // }
+    }
+
     public function createTransactionMonthlyContribution()
     {
         $this->load->model('Emailcon');
