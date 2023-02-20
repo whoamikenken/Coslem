@@ -96,7 +96,7 @@ if($type == "viewing") $readonly = "readonly";
         var date_from = new Date(year, month, 01);
         var date_to = new Date(year, month, 25);
         date_from = date_from.addMonths(1);
-        date_to = date_to.addMonths(Number(period) - Number(1));
+        date_to = date_to.addMonths(Number(period));
         $("#from_date").val(formatDate(date_from));
         $("#to_date").val(formatDate(date_to));
       }
