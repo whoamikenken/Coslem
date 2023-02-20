@@ -74,7 +74,7 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $url = parse_url("mysql://ba6f22198e56c6:4aa30095@us-cdbr-east-06.cleardb.net/heroku_051c16b867ddb9a?reconnect=true");
-echo "<pre>";print_r($url);die;
+
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => $url["host"],
