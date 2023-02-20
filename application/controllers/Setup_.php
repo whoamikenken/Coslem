@@ -338,7 +338,8 @@ class Setup_ extends CI_Controller {
     	if($data['code'] == "add"){
     		unset($data['code']);
     		$data['created_by'] = $this->session->userdata('id');
-    		if ($data['status'] == "APPROVED") $data['approve_by'] =$this->session->userdata('id');
+			$data['status'] == "PENDING";
+    		// if ($data['status'] == "APPROVED") $data['approve_by'] =$this->session->userdata('id');
     		$userMobile = $this->setup->getUserData($data['user_id'], "mobile");
     		$userEmail = $this->setup->getUserData($data['user_id'], "email");
     		$userAddress = $this->setup->getUserData($data['user_id'], "address");

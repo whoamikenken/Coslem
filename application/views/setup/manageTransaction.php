@@ -27,13 +27,13 @@ if ($type == "viewing") $readonly = "readonly";
         <label for="timestamp" class="form-label">Date</label>
         <input type="text" class="datepicker form-control validate" id="timestamp" name="timestamp" aria-describedby="timestamp" value="<?= isset($record['timestamp']) ? $record['timestamp'] : "" ?>">
     </div>
-    <div class="mb-3">
+    <!-- <div class="mb-3">
         <label for="amount" class="form-label">Status </label>
         <select class="form-select validate" aria-label="status" name="status">
             <option value="PENDING" <?php echo (isset($record['status']) && $record['status'] == "PENDING") ? "selected" : "" ?>>PENDING</option>
             <option value="APPROVED" <?php echo (isset($record['status']) && $record['status'] == "APPROVED") ? "selected" : "" ?>>APPROVED</option>
         </select>
-    </div>
+    </div> -->
     <div class="mb-3">
         <label for="remarks" class="form-label">Remarks</label>
         <input type="text" class="form-control validate" id="remarks" name="remarks" aria-describedby="remarks" value="<?= isset($record['remarks']) ? $record['remarks'] : "" ?>" <?= $readonly ?>>
