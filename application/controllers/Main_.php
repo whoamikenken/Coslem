@@ -148,7 +148,7 @@ class Main_ extends CI_Controller {
         // if (date("d") == 01) {
         $record = $this->setup->getUserLoanDataForMonthlyBilling();
         // echo "<pre>";print_r($this->db->last_query());die;
-        echo"<pre>";print_r($record);die;
+        // echo"<pre>";print_r($record);die;
         foreach ($record as $key => $value) {
             // Create Transaction monthly for loan
             $dataTransaction = array();
