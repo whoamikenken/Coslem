@@ -77,10 +77,13 @@ $url = parse_url("mysql://ba6f22198e56c6:4aa30095@us-cdbr-east-06.cleardb.net/he
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => $url["host"],
-	'username' => $url["user"],
-	'password' => $url["pass"],
-	'database' => substr($url["path"], 1),
+	// 'hostname' => $url["host"],
+	// 'username' => $url["user"],
+	// 'password' => $url["pass"],
+	'hostname' => "localhost",
+	'username' => "root",
+	'password' => "",
+	'database' => "coslem",
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

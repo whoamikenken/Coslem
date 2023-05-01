@@ -220,10 +220,10 @@ class Setup_ extends CI_Controller {
 	    	$data['record'] = $data['record'][0];
 	    }
 
-		$data['user_list'] = $this->setup->getUserList($data['user_id'],"member");
+		$data['user_list'] = $this->setup->getUserListWithFund($data['user_id'],"member");
 		$data['user_funds'] = $this->setup->getUserFunds("",$data['user_id']);
 		$data['type'] = $type;
-		// echo"<pre>";print_r($data);die;
+		echo"<pre>";print_r($data);die;
     	$this->load->view("setup/manageLoan", $data);
     }
 

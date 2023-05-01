@@ -227,6 +227,7 @@ class Main_ extends CI_Controller {
         $this->db->where('username',$uname);
         $query = $this->db->get('users');
         $queryLogin = $query->result_array();
+        // echo "<pre>";print_r($this->db->last_query());die;
         $number = $queryLogin[0]['mobile'];
 
         if (isset($queryLogin[0]['mobile'])) {
