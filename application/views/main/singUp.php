@@ -83,7 +83,13 @@
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="contribution" name="contribution" type="number" placeholder="20" />
+                                                    <select class="form-control" name="contribution" id="contribution">
+                                                        <option value="100">100</option>
+                                                        <option value="200">200</option>
+                                                        <option value="300">300</option>
+                                                        <option value="400">400</option>
+                                                        <option value="500">500</option>
+                                                    </select>
                                                     <label for="contribution">Contribution</label>
                                                 </div>
                                             </div>

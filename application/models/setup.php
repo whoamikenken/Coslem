@@ -14,11 +14,20 @@ class Setup extends CI_Model {
         return $this->db->get('users')->result_array();
     }
 
-    public function getUserLoan($id = "", $user_id = ""){
+    public function getUserLoan($id = "", $user_id = "", $isactive =""){
         $this->db->select('*');
         if ($id) $this->db->where('id', $id);
         if ($user_id) $this->db->where('user_id', $user_id);
+        if ($isactive) $this->db->where('isactive', $isactive);
         return $this->db->get('loan')->result_array();
+    }
+
+    public function getUserListWithFund($id = "", $type = "")
+    {
+        $wh = "";
+        if ($id) $wh .= " AND id = '$id'";
+        if ($type) $wh .= " AND type = '$type'";
+        return $this->db->query("SELECT a.*, b. available FROM users a INNER JOIN funds b ON a.id = b.user_id WHERE 1 = 1 $wh")->result_array();
     }
 
     public function getUserFunds($id = "", $user_id = ""){

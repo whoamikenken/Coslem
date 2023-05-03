@@ -221,9 +221,10 @@ class Setup_ extends CI_Controller {
 	    }
 
 		$data['user_list'] = $this->setup->getUserListWithFund($data['user_id'],"member");
+		
 		$data['user_funds'] = $this->setup->getUserFunds("",$data['user_id']);
 		$data['type'] = $type;
-		echo"<pre>";print_r($data);die;
+		// echo"<pre>";print_r($data);die;
     	$this->load->view("setup/manageLoan", $data);
     }
 
@@ -369,6 +370,14 @@ class Setup_ extends CI_Controller {
     		$data['total_loan_amount'] = $data["remaining_balance"];
     		$data['interest'] = $data['remaining_balance'] - $data['amount'];
     		$data['months_paid'] = 0;
+
+			$activeLoanChecker = $this->setup->getUserLoan("", $data['user_id'], "ACTIVE");
+
+			if(count($activeLoanChecker) > 2){
+				echo "over";
+				die;
+			}
+
     		$userMobile = $this->setup->getUserData($data['user_id'], "mobile");
     		$userEmail = $this->setup->getUserData($data['user_id'], "email");
     		$userAddress = $this->setup->getUserData($data['user_id'], "address");

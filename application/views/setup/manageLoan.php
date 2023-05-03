@@ -6,11 +6,15 @@ if ($type == "viewing") $readonly = "readonly";
 <form id="loanManageForm">
     <div class="mb-3">
         <label for="user_id" class="form-label">User</label>
-        <select class="form-select validate" aria-label="user_id" name="user_id" <?= $readonly ?>>
+        <select class="form-select validate" aria-label="user_id" name="user_id" <?= $readonly ?> id="user_id">
             <?php foreach ($user_list as $key => $value) : ?>
-                <option value="<?= $value['id'] ?>" <?= (isset($record['user_id']) && $value['id'] == $record['user_id']) ? "selected" : "" ?>><?= $value['name'] ?></option>
+                <option value="<?= $value['id'] ?>" <?= (isset($record['user_id']) && $value['id'] == $record['user_id']) ? "selected" : "" ?> availFund="<?= $value['available'] ?>"><?= $value['name'] ?></option>
             <?php endforeach ?>
         </select>
+    </div>
+    <div class="mb-3">
+        <label for="amount" class="form-label">Available Funds </label>
+        <input type="text" class="form-control validate" id="availableFunds" readonly>
     </div>
     <div class="mb-3">
         <label for="amount" class="form-label">Amount </label>
@@ -18,7 +22,7 @@ if ($type == "viewing") $readonly = "readonly";
     </div>
     <div class="mb-3">
         <label for="months_period" class="form-label">Months To Pay</label>
-        <input type="number" class="form-control validate" id="months_period" name="months_period" min="1" max="12" <?php echo ($this->session->userdata("type") == "member") ? 'onkeyup="if(value<0) value=0;if(value>12) value=12;"':"" ?>  aria-describedby="months_period" value="<?= isset($record['months_period']) ? $record['months_period'] : "" ?>" <?= $readonly ?>>
+        <input type="number" class="form-control validate" id="months_period" name="months_period" min="1" max="12" <?php echo ($this->session->userdata("type") == "member") ? 'onkeyup="if(value<0) value=0;if(value>12) value=12;"' : "" ?> aria-describedby="months_period" value="<?= isset($record['months_period']) ? $record['months_period'] : "" ?>" <?= $readonly ?>>
     </div>
     <div class="mb-3">
         <label for="from_date" class="form-label">Date From</label>
@@ -55,6 +59,15 @@ if ($type == "viewing") $readonly = "readonly";
         if ("<?= $readonly ?>" == "readonly") {
             $("#saveModal").hide();
         }
+
+        $("#user_id").trigger("change");
+    });
+
+    $("#user_id").change(function() {
+        var selectedOption = $(this).find('option:selected');
+        var availFund = selectedOption.attr('availFund');
+        $("#available").val(availFund);
+        $("#availableFunds").val(availFund);
     });
 
     $("#amount").blur(function() {
@@ -116,7 +129,15 @@ if ($type == "viewing") $readonly = "readonly";
             data: $('#loanManageForm').serialize(),
             success: function(response) {
                 $("#modal-view").modal('toggle');
-                if ($("#code").val() == "add") {
+                if (response == "over") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'You already have two active loan.',
+                        showConfirmButton: true,
+                        timer: 2000
+                    })
+                }else if ($("#code").val() == "add") {
                     Swal.fire({
                         icon: 'success',
                         title: 'Success!',
