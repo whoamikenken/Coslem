@@ -223,6 +223,9 @@ class Setup_ extends CI_Controller {
 		$data['user_list'] = $this->setup->getUserListWithFund($data['user_id'],"member");
 		
 		$data['user_funds'] = $this->setup->getUserFunds("",$data['user_id']);
+
+		$data['current_interest'] = $this->setup->getAnnualInterest();
+
 		$data['type'] = $type;
 		// echo"<pre>";print_r($data);die;
     	$this->load->view("setup/manageLoan", $data);
@@ -362,7 +365,6 @@ class Setup_ extends CI_Controller {
     public function saveLoan(){
     	$data = $this->input->post();
     	
-
     	if($data['code'] == "add"){
     		unset($data['code']);
     		$data['requested_by'] = $this->session->userdata('id');

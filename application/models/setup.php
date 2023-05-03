@@ -14,11 +14,13 @@ class Setup extends CI_Model {
         return $this->db->get('users')->result_array();
     }
 
-    public function getUserLoan($id = "", $user_id = "", $isactive =""){
+    public function getUserLoan($id = "", $user_id = "", $isactive ="", $group_by = ""){
         $this->db->select('*');
         if ($id) $this->db->where('id', $id);
         if ($user_id) $this->db->where('user_id', $user_id);
         if ($isactive) $this->db->where('isactive', $isactive);
+        if ($group_by) $this->db->group_by($group_by); 
+        
         return $this->db->get('loan')->result_array();
     }
 
@@ -75,7 +77,7 @@ class Setup extends CI_Model {
         $this->db->where('type', 'member');
         return $this->db->get('users')->result_array();
     }
-
+    
     public function getTotalContributionUser($dateFrom, $dateTo, $user_id= ""){
         $query = $this->db->query("SELECT SUM(amount) as total FROM transactions WHERE DATE(`timestamp`) BETWEEN '$dateFrom' AND '$dateTo' AND `user_id` = '$user_id' AND `type` = 'Contribution' AND `status` = 'APPROVED' ")->result_array();
         if ($query[0]['total'] != "") {
@@ -255,6 +257,30 @@ class Setup extends CI_Model {
         }
     }
 
+    public function getAnnualInterest()
+    {
+        $this->db->select('loan_interest');
+        $this->db->where('status', "ACTIVE");
+        $res = $this->db->get('annual')->result_array();
+        if (count($res) > 0) {
+            return $res[0]['loan_interest'];
+        } else {
+            return "5";
+        }
+    }
+
+    public function getAnnualInterestPenaltyAmount()
+    {
+        $this->db->select('loan_penalty');
+        $this->db->where('status', "ACTIVE");
+        $res = $this->db->get('annual')->result_array();
+        if (count($res) > 0) {
+            return $res[0]['loan_penalty'];
+        } else {
+            return "false";
+        }
+    }
+
     public function getAnnualMonth(){
         $this->db->select('TIMESTAMPDIFF(MONTH, from_date, CURRENT_DATE) AS `month`');
         $this->db->where('status', "ACTIVE");
@@ -373,6 +399,18 @@ class Setup extends CI_Model {
         $this->db->select($column);
         if ($id) $this->db->where('user_id', $id);
         $res = $this->db->get('funds')->result_array();
+        if (count($res) > 0) {
+            return $res[0][$column];
+        } else {
+            return "false";
+        }
+    }
+
+    public function getUserSingleData($id, $column)
+    {
+        $this->db->select($column);
+        if ($id) $this->db->where('id', $id);
+        $res = $this->db->get('users')->result_array();
         if (count($res) > 0) {
             return $res[0][$column];
         } else {

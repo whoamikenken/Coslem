@@ -15,6 +15,19 @@
         </select>
     </div>
     <div class="mb-3">
+        <label for="loan_interest" class="form-label">Loan Interest</label>
+        <select class="form-select validate" aria-label="loan_interest" name="loan_interest" <?= (isset($record['loan_interest']) && $record['loan_interest'] == "100") ? "disabled" : "" ?>>
+            <option value="2" <?= (isset($record['loan_interest']) && $record['loan_interest'] == "2") ? "selected" : "" ?>>2%</option>
+            <option value="3" <?= (isset($record['loan_interest']) && $record['loan_interest'] == "3") ? "selected" : "" ?>>3%</option>
+            <option value="4" <?= (isset($record['loan_interest']) && $record['loan_interest'] == "4") ? "selected" : "" ?>>4%</option>
+            <option value="5" <?= (isset($record['loan_interest']) && $record['loan_interest'] == "5") ? "selected" : "" ?>>5%</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="loan_penalty" class="form-label">Loan Late Penalty</label>
+        <input type="number" class="form-control validate" id="loan_penalty" name="loan_penalty" aria-describedby="loan_penalty" value="<?= isset($record['loan_penalty']) ? $record['loan_penalty'] : "" ?>">
+    </div>
+    <div class="mb-3">
         <label for="status" class="form-label">Status</label>
         <select class="form-select validate" aria-label="status" name="status" <?= (isset($record['status']) && $record['status'] == "ACTIVE") ? "disabled" : "" ?>>
             <option value="ACTIVE" <?= (isset($record['status']) && $record['status'] == "Unverified") ? "selected" : "" ?>>ACTIVE</option>
@@ -22,7 +35,7 @@
         </select>
     </div>
     <input type="hidden" id="code" name="code" value="<?= $code ?>">
- </form>
+</form>
 
 <script type="text/javascript">
     $(document).ready(function() {

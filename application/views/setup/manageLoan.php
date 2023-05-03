@@ -12,10 +12,13 @@ if ($type == "viewing") $readonly = "readonly";
             <?php endforeach ?>
         </select>
     </div>
-    <div class="mb-3">
-        <label for="amount" class="form-label">Available Funds </label>
-        <input type="text" class="form-control validate" id="availableFunds" readonly>
-    </div>
+    <?php
+    if ($code  == "add") { ?>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Available Funds </label>
+            <input type="text" class="form-control validate" id="availableFunds" readonly>
+        </div>
+    <?php  } ?>
     <div class="mb-3">
         <label for="amount" class="form-label">Amount </label>
         <input type="number" class="form-control validate" id="amount" name="amount" aria-describedby="amount" value="<?= isset($record['amount']) ? $record['amount'] : "" ?>" <?= $readonly ?>>
@@ -98,7 +101,7 @@ if ($type == "viewing") $readonly = "readonly";
             var amount = $("#amount").val();
             var period = $("#months_period").val();
             var monthly = Number(amount) / Number(period);
-            var monthlyPercentage = Number(monthly) + (Number(5 / 100) * monthly);
+            var monthlyPercentage = Number(monthly) + (Number("<?php echo $current_interest ?>" / 100) * monthly);
             var interest = Number(amount) - Number(monthlyPercentage) * monthly;
             $("#monthly").val(monthlyPercentage);
 
@@ -137,7 +140,7 @@ if ($type == "viewing") $readonly = "readonly";
                         showConfirmButton: true,
                         timer: 2000
                     })
-                }else if ($("#code").val() == "add") {
+                } else if ($("#code").val() == "add") {
                     Swal.fire({
                         icon: 'success',
                         title: 'Success!',

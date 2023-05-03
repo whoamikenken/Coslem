@@ -123,7 +123,7 @@ class Main_ extends CI_Controller {
     public function createTransactionMonthlyLoan()
     {
         $this->load->model('Emailcon');
-        if (date("d") == 01) {
+        // if (date("d") == 01) {
             $record = $this->setup->getUserLoanDataForMonthlyBilling();
             // echo "<pre>";print_r($this->db->last_query());die;
             // echo"<pre>";print_r($record);die;
@@ -146,7 +146,46 @@ class Main_ extends CI_Controller {
                 // $message = $this->loanRequestEmailMain($value['name'], $value['address'], $insert_id, "Loan Payment", "Please pay your loan amounting ".$value['amount'].".00 to any of our treasurer.");
                 // $this->Emailcon->sendEmail($message, $value['email'], "Loan Request Payment");
             }
-        }
+        // }
+    }
+
+    public function createTransactionMonthlyLoanDue()
+    {
+        $this->load->model('Emailcon');
+        // if (date("d") == 01) {
+            $record = $this->setup->getUserLoan("","","", "user_id");
+            // echo "<pre>";print_r($this->db->last_query());die;
+            // echo"<pre>";print_r($record);die;
+            foreach ($record as $key => $value) {
+
+                $loanListDue = $this->setup->getTransactionSetup("","PENDING", $value['user_id'], "Loan Payment");
+                $loanPenalty = $this->setup->getAnnualInterestPenaltyAmount();
+                if(!$loanPenalty){
+                    $loanPenalty = 20;
+                }
+
+                $loanCount = count($loanListDue);
+                if($loanCount > 0){
+                    $penaltyAmount = $loanPenalty * $loanCount;
+                    // Create Transaction monthly for loan
+                    $dataTransaction = array();
+                    $dataTransaction['user_id'] = $value['user_id'];
+                    $dataTransaction['type'] = "Loan Penalty";
+                    $dataTransaction['amount'] = $penaltyAmount;
+                    $dataTransaction['created_by'] = "1";
+                    $dataTransaction['approve_by'] = "1";
+                    $dataTransaction['status'] = "PENDING";
+                    $dataTransaction['remarks'] = "Monthly Loan Penalty";
+                    $this->setup->insertData("transactions", $dataTransaction);
+                    $insert_id = $this->db->insert_id();
+
+                    $mobile = $this->setup->getUserSingleData($value['user_id'], "mobile");
+                    $name = $this->setup->getUserSingleData($value['user_id'], "name");
+
+                    $this->smsSenderMain($mobile, "Hello, " . $name . ". You have incurred a loan penalty worth ₱". $penaltyAmount." for ". $loanCount." unpaid monthly loan payment.");
+                }
+            }
+        // }
     }
 
     public function createMonthlyTransactionTest()

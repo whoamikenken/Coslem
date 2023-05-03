@@ -24,7 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 // $config['base_url'] = 'https://coslem.herokuapp.com/';
-$config['base_url'] = 'http://localhost:8080/coslem';
+// $config['base_url'] = 'http://localhost:8080/coslem';
+$config['base_url'] = 'http://localhost/Coslem';
 
 /*
 |--------------------------------------------------------------------------

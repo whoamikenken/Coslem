@@ -5,6 +5,8 @@
         <tr>
             <th><b>Actions</b></th>
             <th><b>Per Share</b></th>
+            <th><b>Loan Interest</b></th>
+            <th><b>Loan Penalty</b></th>
             <th><b>Status</b></th>
             <th><b>From Date</b></th>
             <th><b>To Date</b></th>
@@ -21,6 +23,8 @@
                     <a code="<?= $row['id'] ?>" class="btn btn-success annual"><i class="bi bi-printer"></i> Print Annual Report</a>
                 </td>
                 <td><?= $row['share'] ?></td>
+                <td><?= $row['loan_interest']."%" ?></td>
+                <td><?= "₱".$row['loan_penalty'] ?></td>
                 <td><?= $row['status'] ?></td>
                 <td><?= $row['from_date'] ?></td>
                 <td><?= $row['to_date'] ?></td>
@@ -33,9 +37,9 @@
 
 <form id="reportAnnualTable" action="<?= base_url() ?>index.php/setup_/annualReport" method="POST" target="_blank">
     <input type="hidden" name="code" id="transactionCode">
- </form>
+</form>
 
- 
+
 <script>
     $(document).ready(function() {
         var table = $('#annualTable').DataTable();
@@ -57,7 +61,7 @@
         });
     });
 
-    $("#annualTable").on("click", ".annual", function(){
+    $("#annualTable").on("click", ".annual", function() {
         $("#transactionCode").val($(this).attr("code"));
         jQuery('#reportAnnualTable').submit();
     });
