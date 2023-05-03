@@ -1,4 +1,4 @@
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark" style="border-bottom: 5px solid #6c757d;">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-<?php echo $this->session->userdata("bg")?>" style="border-bottom: 5px solid #6c757d;">
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="<?= base_url() ?>"><img src="<?= base_url(); ?>images/logo.png" alt="" width="30" height="24"> COSLEM</a>
         <!-- Sidebar Toggle-->

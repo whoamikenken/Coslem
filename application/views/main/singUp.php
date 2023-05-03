@@ -24,6 +24,7 @@
                                 </div>
                                 <div class="card-body">
                                     <form id="registration">
+                                        <input type="hidden" id="name" name="name">
                                         <div class="row mb-3">
                                             <div class="col-md-12">
                                                 <div class="form-floating mb-3 mb-md-0">
@@ -33,17 +34,17 @@
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name" />
+                                                    <input class="form-control" id="fname" name="fname" type="text" placeholder="Enter your first name" />
                                                     <label for="name">First Name</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="" name="" type="text" placeholder="Enter your name" />
+                                                    <input class="form-control" id="lname" name="lname" type="text" placeholder="Enter your last name" />
                                                     <label for="">Last Name</label>
                                                 </div>
                                             </div>
@@ -142,7 +143,7 @@
         $(document).ready(function() {});
         $('#createAccount').on('click', function() {
             var username = $('#username').val();
-            var firstname = $('#name').val();
+            var firstname = $('#fname').val();
             var lastname = $('#lname').val();
             var email = $('#email').val();
             var mobile = $('#mobile').val();
@@ -151,6 +152,8 @@
             var address = $('#address').val();
             var password = $('#password').val();
             var confirm = $('#confirm_pass').val();
+            var name = firstname + " " + lastname;
+            $("#name").val(name);
 
             // Check if all fields are filled out
             if (username === '' || firstname === '' || lastname === '' || email === '' ||
@@ -174,10 +177,8 @@
                 return false;
             }
 
-            if (age < 18) {
-            }
-            else{
-                  Swal.fire({
+            if (age < 18) {} else {
+                Swal.fire({
                     icon: 'error',
                     title: 'Error',
                     text: 'under age'

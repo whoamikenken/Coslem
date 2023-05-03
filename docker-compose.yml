@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    extra_hosts:
+      - "db:192.168.2.176"
+    volumes:
+      - .:/var/www/html/coslem

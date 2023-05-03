@@ -91,6 +91,13 @@ class Main_ extends CI_Controller {
         }elseif(count($queryLogin) > 0){
             $queryLogin = $queryLogin[0];
             $queryLogin['logged_in'] = TRUE;
+            if ($queryLogin['type'] == "member") {
+                $queryLogin['bg'] = 'secondary';
+            } elseif ($queryLogin['type'] == "treasurer") {
+                $queryLogin['bg'] = 'info';
+            } else {
+                $queryLogin['bg'] = 'dark';
+            }
             $sess = $queryLogin;
             $this->session->set_userdata($sess);
 
