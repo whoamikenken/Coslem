@@ -14,16 +14,6 @@ class Setup extends CI_Model {
         return $this->db->get('users')->result_array();
     }
 
-    public function getUserListWithFund($id = "", $type = "")
-    {
-        
-        $wh = "";
-        $this->db->select('*');
-        if ($id) $wh .= " AND id = '$id'";
-        if ($type) $wh .= " AND type = '$type'";
-        return $this->db->query("SELECT a.*, b. available FROM users a INNER JOIN funds b ON a.id = b.user_id WHERE 1 = 1 $wh")->result_array();
-    }
-
     public function getUserLoan($id = "", $user_id = ""){
         $this->db->select('*');
         if ($id) $this->db->where('id', $id);
