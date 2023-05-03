@@ -15,7 +15,8 @@ class Setup extends CI_Model {
     }
 
     public function getUserListWithFund($id = "", $type = "")
-    { 
+    {
+        
         $wh = "";
         $this->db->select('*');
         if ($id) $wh .= " AND id = '$id'";
