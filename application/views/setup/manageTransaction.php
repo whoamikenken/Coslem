@@ -6,7 +6,7 @@ if ($type == "viewing") $readonly = "readonly";
 <form id="TransactionManageForm">
     <div class="mb-3">
         <label for="user_id" class="form-label">User</label>
-        <select class="form-select validate" aria-label="user_id" name="user_id" <?= $readonly ?>>
+        <select class="form-select validate" aria-label="user_id" name="user_id" <?= $readonly ?> id="user_id">
             <?php foreach ($user_list as $key => $value) : ?>
                 <option value="<?= $value['id'] ?>" <?= (isset($value['id']) && $value['id'] == $user_id) ? "selected" : "" ?>><?= $value['name'] ?></option>
             <?php endforeach ?>
@@ -17,10 +17,20 @@ if ($type == "viewing") $readonly = "readonly";
         <input type="number" class="form-control validate" id="amount" name="amount" aria-describedby="amount" value="<?= isset($record['amount']) ? $record['amount'] : "" ?>" <?= $readonly ?>>
     </div>
     <div class="mb-3">
-        <label for="amount" class="form-label">Type </label>
-        <select class="form-select validate" aria-label="type" name="type">
+        <label for="type" class="form-label">Type </label>
+        <select class="form-select validate" aria-label="type" name="type" id="type">
             <option value="Contribution">Contribution</option>
             <option value="Loan">Loan</option>
+            <option value="Loan Payment">Loan Payment</option>
+        </select>
+    </div>
+    <div class="mb-3" id="loanInput" style="display:none;">
+        <label for="base_id" class="form-label">Loan List</label>
+        <select class="form-select validate" aria-label="base_id" name="base_id" <?= $readonly ?>>
+            <option value="">Select Loan</option>
+            <?php foreach ($user_loan as $key => $value) : ?>
+                <option class="userloan<?= $value['user_id'] ?> userloanOption" value="<?= $value['id'] ?>"><?= $value['remarks'] ?></option>
+            <?php endforeach ?>
         </select>
     </div>
     <div class="mb-3">
@@ -49,6 +59,22 @@ if ($type == "viewing") $readonly = "readonly";
         $('.datepicker').datepicker({
             format: 'yyyy-mm-dd'
         });
+    });
+
+    $("#user_id").change(function() {
+        $("#type").trigger('change');
+    });
+
+    $("#type").change(function() {
+        if ($(this).val() == "Loan Payment") {
+            $("#loanInput").show();
+            var userIDselected = $("#user_id").val();
+            $(".userloanOption").hide();
+            $(".userloan" + userIDselected).show();
+        } else {
+            $("#loanInput").hide();
+            $(".userloanOption").show();
+        }
     });
 
     $("#saveModal").unbind().click(function() {

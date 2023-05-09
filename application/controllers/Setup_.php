@@ -66,7 +66,7 @@ class Setup_ extends CI_Controller {
 		$TrasactionType = $this->setup->getTransactionSingleData($data['code'], "type");
 		$TransactionUser = $this->setup->getTransactionSingleData($data['code'], "user_id");
 		$userMobile = $this->setup->getUserData($TransactionUser, "mobile");
-
+		
 		if ($TrasactionType == "Contribution") {
 			$TransactionAmount = $this->setup->getTransactionSingleData($data['code'], "amount");
 			
@@ -90,7 +90,7 @@ class Setup_ extends CI_Controller {
 			// UPDATE USER FUNDS
 			$userFundsData = array();
 			$userFundsData['balance'] = $getUserFundsBalance - $TransactionAmount;
-
+			
 			$this->setup->updateData("funds", $userFundsData, $getUserFundID);
 
 			if ($TrasactionType == "Loan Payment") {
@@ -179,6 +179,10 @@ class Setup_ extends CI_Controller {
 		$data['type'] = $type;
 		// echo"<pre>";print_r($data);die;
 		$data['user_list'] = $this->setup->getUserList("","member");
+		$data['user_loan'] = $this->setup->getUserLoan("", "", "ACTIVE", "", "APPROVED");
+		// echo "<pre>";
+		// print_r($data);
+		// die;
     	$this->load->view("setup/manageTransaction", $data);
     }
 
@@ -349,7 +353,7 @@ class Setup_ extends CI_Controller {
     	if($data['code'] == "add"){
     		unset($data['code']);
     		$data['created_by'] = $this->session->userdata('id');
-			$data['status'] == "PENDING";
+			$data['status'] = "PENDING";
     		// if ($data['status'] == "APPROVED") $data['approve_by'] =$this->session->userdata('id');
     		$userMobile = $this->setup->getUserData($data['user_id'], "mobile");
     		$userEmail = $this->setup->getUserData($data['user_id'], "email");

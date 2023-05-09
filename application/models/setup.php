@@ -16,12 +16,13 @@ class Setup extends CI_Model
         return $this->db->get('users')->result_array();
     }
 
-    public function getUserLoan($id = "", $user_id = "", $isactive = "", $group_by = "")
+    public function getUserLoan($id = "", $user_id = "", $isactive = "", $group_by = "", $status = "")
     {
         $this->db->select('*');
         if ($id) $this->db->where('id', $id);
         if ($user_id) $this->db->where('user_id', $user_id);
         if ($isactive) $this->db->where('isactive', $isactive);
+        if ($status) $this->db->where('status', $status);
         if ($group_by) $this->db->group_by($group_by);
 
         return $this->db->get('loan')->result_array();
