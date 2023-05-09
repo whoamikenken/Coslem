@@ -30,8 +30,8 @@ class Setup extends CI_Model
     public function getUserListWithFund($id = "", $type = "")
     {
         $wh = "";
-        if ($id) $wh .= " AND id = '$id'";
-        if ($type) $wh .= " AND type = '$type'";
+        if ($id) $wh .= " AND a.id = '$id'";
+        if ($type) $wh .= " AND a.type = '$type'";
         return $this->db->query("SELECT a.*, b. available FROM users a INNER JOIN funds b ON a.id = b.user_id WHERE 1 = 1 $wh")->result_array();
     }
 

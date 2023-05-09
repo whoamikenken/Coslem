@@ -64,12 +64,18 @@ class Setup_ extends CI_Controller {
 		if (!isset($data['status'])) $updateData['status'] = "APPROVED";
 
 		$TrasactionType = $this->setup->getTransactionSingleData($data['code'], "type");
+		$TransactionUser = $this->setup->getTransactionSingleData($data['code'], "user_id");
+		$userMobile = $this->setup->getUserData($TransactionUser, "mobile");
+
 		if ($TrasactionType == "Contribution") {
 			$TransactionAmount = $this->setup->getTransactionSingleData($data['code'], "amount");
-			$TransactionUser = $this->setup->getTransactionSingleData($data['code'], "user_id");
+			
 			$getUserFundsAvailable = $this->setup->getUserFundsSingleData($TransactionUser, "available");
 			$getUserFundsContribution = $this->setup->getUserFundsSingleData($TransactionUser, "contribution");
 			$getUserFundID = $this->setup->getUserFundsSingleData($TransactionUser, "id");
+
+			$this->smsSender($userMobile, "Your contribution is poster amounting:₱" . $TransactionAmount.".00");
+
 			// UPDATE USER FUNDS
 			$userFundsData = array();
 			$userFundsData['available'] = $getUserFundsAvailable + ($TransactionAmount * 3);
@@ -78,7 +84,6 @@ class Setup_ extends CI_Controller {
 		} elseif ($TrasactionType == "Loan Payment" || $TrasactionType == "Loan Fines") {
 
 			$TransactionAmount = $this->setup->getTransactionSingleData($data['code'], "amount");
-			$TransactionUser = $this->setup->getTransactionSingleData($data['code'], "user_id");
 			$getUserFundsBalance = $this->setup->getUserFundsSingleData($TransactionUser, "balance");
 			$getUserFundID = $this->setup->getUserFundsSingleData($TransactionUser, "id");
 
@@ -95,6 +100,8 @@ class Setup_ extends CI_Controller {
 				// UPDATE REMAINING BALANCE MONTH
 				$userLoanRemainingData = array();
 				$userLoanRemainingData['remaining_balance'] = $getUserRemmainingLoan - $TransactionAmount;
+
+				$this->smsSender($userMobile, "Your payment has been posted. Remaining balance is :₱". $userLoanRemainingData['remaining_balance'].".00");
 
 				$this->setup->updateData("loan", $userLoanRemainingData, $getUserLoanID);
 			}
