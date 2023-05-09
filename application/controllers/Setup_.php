@@ -74,7 +74,7 @@ class Setup_ extends CI_Controller {
 			$getUserFundsContribution = $this->setup->getUserFundsSingleData($TransactionUser, "contribution");
 			$getUserFundID = $this->setup->getUserFundsSingleData($TransactionUser, "id");
 
-			$this->smsSender($userMobile, "Your contribution is poster amounting:₱" . $TransactionAmount.".00");
+			$this->smsSender($userMobile, "Your contribution is posted amounting:₱" . $TransactionAmount.".00");
 
 			// UPDATE USER FUNDS
 			$userFundsData = array();
