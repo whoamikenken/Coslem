@@ -80,10 +80,21 @@ $db['default'] = array(
 	// 'hostname' => $url["host"],
 	// 'username' => $url["user"],
 	// 'password' => $url["pass"],
-	'hostname' => "db",
-	'username' => "ken",
-	'password' => "passwrd",
+
+
+	// KEN CONFIG
+	// 'hostname' => "db",
+	// 'username' => "ken",
+	// 'password' => "passwrd",
+	// 'database' => "coslem",
+
+	// LOCALHOST
+	'hostname' => "localhost",
+	'username' => "root",
+	'password' => "",
 	'database' => "coslem",
+
+
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
